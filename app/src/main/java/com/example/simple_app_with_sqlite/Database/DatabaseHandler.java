@@ -56,6 +56,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return 1;
     }
 
+    public ArrayList<BarangModel> getBarang(String id){
+        ArrayList<BarangModel> listBarang = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cur = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE kode_barang = '"+id+"'", null);
+        int i = 0;
+        if (cur.getCount() > 0) cur.moveToFirst();
+        while (i < cur.getCount()){
+            BarangModel barangModel = new BarangModel(
+                    cur.getString(cur.getColumnIndex("kode_barang")),
+                    cur.getString(cur.getColumnIndex("nama_barang")),
+                    cur.getString(cur.getColumnIndex("satuan")),
+                    cur.getString(cur.getColumnIndex("kategori")),
+                    cur.getInt(cur.getColumnIndex("harga_beli")),
+                    cur.getInt(cur.getColumnIndex("harga_jual"))
+            );
+            listBarang.add(barangModel);
+            cur.moveToNext();
+            i++;
+        }
+        db.close();
+        return listBarang;
+    }
+
     public List<BarangModel> getAllRecord(){
         List<BarangModel> userList = new ArrayList<>();
         String getAllQuery = "SELECT * FROM "+TABLE_NAME;
@@ -76,5 +99,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         db.close();
         return userList;
+    }
+
+    public int hapus_barang(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, "kode_barang = '"+id+"'", null);
+        db.close();
+
+        return 1;
     }
 }

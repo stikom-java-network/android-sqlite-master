@@ -74,14 +74,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Harga beli"/>
+                android:hint="Harga beli"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/harga_jual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Harga jual"/>
+                android:hint="Harga jual"
+                android:inputType="number"/>
 
         </LinearLayout>
 
